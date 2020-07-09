@@ -16,7 +16,7 @@
 /**
  * Book from znanium.com module
  *
- * @package mod_znaniumcombook
+ * @package atto_znaniumcombook
  * @copyright 2020 Vadim Dvorovenko
  * @copyright 2020 ООО «ЗНАНИУМ»
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,12 +25,11 @@
 import book_picker_modal from './book_picker_modal';
 
 export function init(callback) {
-    alert('init called');
-    const modal = new book_picker_modal(callback);
+    let modal;
     let hideAndCallback = function (id, description, cover) {
-        alert('selected ' + id);
         modal.hide();
         callback(id, description, cover);
     };
+    modal = new book_picker_modal(hideAndCallback);
     modal.show();
 }
