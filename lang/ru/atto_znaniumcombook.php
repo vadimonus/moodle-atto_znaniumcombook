@@ -24,4 +24,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['button_name'] = 'Гиперссылка на книгу из ЭБС Znanium';
+$string['pluginname'] = 'Гиперссылка на книгу из ЭБС Znanium';
 $string['privacy:metadata'] = 'Плагин не хранит персональные данные.';

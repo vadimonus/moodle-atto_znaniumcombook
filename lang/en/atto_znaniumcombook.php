@@ -24,5 +24,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['button_name'] = 'Hyperlink to book from Znanium DL';
+$string['pluginname'] = 'Hyperlink to book from Znanium DL';
 $string['privacy:metadata'] = 'The plugin does not store any personal data.';
 
