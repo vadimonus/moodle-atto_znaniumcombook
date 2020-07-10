@@ -110,7 +110,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
         this.addButton({
             title: 'button_name',
             icon: 'icon',
-            iconComponent: 'mod_znaniumcombook',
+            iconComponent: 'atto_znaniumcombook',
             callback: this._displaySearchDialogue,
             buttonName: 'znaniumcombook',
         });
