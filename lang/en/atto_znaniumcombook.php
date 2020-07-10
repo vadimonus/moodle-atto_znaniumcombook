@@ -15,7 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
-/**
  * Book from znanium.com module
  *
  * @package atto_znaniumcombook

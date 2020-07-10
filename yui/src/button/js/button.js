@@ -14,9 +14,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @component  atto_znaniumcombook
- * @copyright  2014 Jerome Mouneyrac
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Book from znanium.com module
+ *
+ * @package atto_znaniumcombook
+ * @copyright 2020 Vadim Dvorovenko
+ * @copyright 2020 ООО «ЗНАНИУМ»
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 var COMPONENTNAME = 'atto_znaniumcombook';
@@ -25,17 +28,20 @@ var FORM_TEMPLATE =
     '<form class="atto_form">' +
         '<div class="mb-1">' +
             '<label for="{{elementid}}_atto_znaniumcombook_page">{{get_string "page_modal_page" component}}</label>' +
-            '<input class="form-control atto_znaniumcombook_page" type="text" id="{{elementid}}_atto_znaniumcombook_page"/>' +
+            '<input class="form-control atto_znaniumcombook_page" type="text" ' +
+                'id="{{elementid}}_atto_znaniumcombook_page"/>' +
         '</div>' +
         '<div class="form-check">' +
-            '<input type="checkbox" class="form-check-input atto_znaniumcombook_newwindow" id="{{elementid}}_atto_znaniumcombook_newwindow"/>' +
+            '<input type="checkbox" class="form-check-input atto_znaniumcombook_newwindow" '
+                + 'id="{{elementid}}_atto_znaniumcombook_newwindow"/>' +
             '<label class="form-check-label" for="{{elementid}}_atto_znaniumcombook_newwindow">' +
                 '{{get_string "page_modal_new_window" component}}' +
             '</label>' +
         '</div>' +
         '<div class="mdl-align">' +
             '<br/>' +
-            '<button type="submit" class="btn btn-secondary submit">{{get_string "page_modal_button" component}}</button>' +
+            '<button type="submit" class="btn btn-secondary submit">{{get_string "page_modal_button" component}}' +
+                '</button>' +
         '</div>' +
     '</form>';
 
@@ -100,7 +106,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      *
      * @method initializer
      */
-    initializer: function (config) {
+    initializer: function() {
         this.addButton({
             title: 'button_name',
             icon: 'icon',
@@ -147,7 +153,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
             return;
         }
 
-        anchornodes = this._findSelectedAnchors(Y.one(selectednode));
+        var anchornodes = this._findSelectedAnchors(Y.one(selectednode));
         return anchornodes.length > 0;
     },
 
@@ -161,7 +167,8 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      */
     _findSelectedAnchors: function(node) {
         var tagname = node.get('tagName'),
-            hit, hits;
+            hit,
+            hits;
 
         // Direct hit.
         if (tagname && tagname.toLowerCase() === 'a') {
@@ -192,7 +199,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      * @method _displaySearchDialogue
      * @private
      */
-    _displaySearchDialogue: function () {
+    _displaySearchDialogue: function() {
         // Store the current selection.
         this._currentSelection = this.get('host').getSelection();
         if (this._currentSelection === false) {
@@ -203,7 +210,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
         var modname = 'atto_znaniumcombook/bookpicker-lazy';
         var that = this;
         M.util.js_pending(modname);
-        require([modname], function (amd) {
+        require([modname], function(amd) {
             M.util.js_complete(modname);
             amd.init(that._onBookSelected.bind(that));
         });
@@ -218,7 +225,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      * @param {String} cover
      * @private
      */
-    _onBookSelected: function (id, description, cover) {
+    _onBookSelected: function(id, description, cover) {
         this._bookId = id;
         this._description = description;
         this._cover = cover;
@@ -272,7 +279,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      * @param {EventFacade} e
      * @private
      */
-    _onPageEntered: function (e) {
+    _onPageEntered: function(e) {
         e.preventDefault();
         this.getDialogue({
             focusAfterHide: null
@@ -297,7 +304,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      * @method _insertHyperlink
      * @private
      */
-    _insertHyperlink: function () {
+    _insertHyperlink: function() {
         var host = this.get('host');
 
         // Focus on the previous selection.
@@ -317,7 +324,7 @@ Y.namespace('M.atto_znaniumcombook').Button = Y.Base.create('button', Y.M.editor
      * @method _getHtml
      * @private
      */
-    _getHtml: function () {
+    _getHtml: function() {
         var url = M.cfg.wwwroot + '/blocks/znanium_com/redirect.php?documentid=' + this._bookId;
         if (this._page) {
             url = url + '&page=' + this._page;
