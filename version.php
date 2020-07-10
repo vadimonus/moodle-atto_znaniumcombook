@@ -30,5 +30,5 @@ $plugin->requires = 2016120500; // Requires Moodle 3.2.
 $plugin->component = 'atto_znaniumcombook';  // Full name of the plugin.
 $plugin->dependencies = array(
     'block_znanium_com' => 2020060602,
-    'mod_znaniumcombook' => 2020070801,
+    'mod_znaniumcombook' => 2020070802,
 );
