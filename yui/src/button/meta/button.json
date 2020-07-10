@@ -1,0 +1,7 @@
+{
+    "moodle-atto_znaniumcombook-button": {
+        "requires": [
+            "moodle-editor_atto-plugin"
+        ]
+    }
+}

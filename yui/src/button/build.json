@@ -1,0 +1,10 @@
+{
+  "name": "moodle-atto_znaniumcombook-button",
+  "builds": {
+    "moodle-atto_znaniumcombook-button": {
+      "jsfiles": [
+        "button.js"
+      ]
+    }
+  }
+}

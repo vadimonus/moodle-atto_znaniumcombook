@@ -25,5 +25,9 @@
  */
 
 $string['button_name'] = 'Гиперссылка на книгу из ЭБС Znanium';
+$string['page_modal_button'] = 'Вставить';
+$string['page_modal_new_window'] = 'Открывать в новом окне';
+$string['page_modal_page'] = 'Номер страницы';
+$string['page_modal_title'] = 'Параметры гиперссылки';
 $string['pluginname'] = 'Гиперссылка на книгу из ЭБС Znanium';
 $string['privacy:metadata'] = 'Плагин не хранит персональные данные.';

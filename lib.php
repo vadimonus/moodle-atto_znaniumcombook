@@ -15,7 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
-/**
  * Book from znanium.com module
  *
  * @package atto_znaniumcombook
@@ -24,11 +23,27 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['button_name'] = 'Hyperlink to book from Znanium DL';
-$string['page_modal_button'] = 'Insert';
-$string['page_modal_new_window'] = 'Open in new window';
-$string['page_modal_page'] = 'Page number';
-$string['page_modal_title'] = 'Hyperlink properties';
-$string['pluginname'] = 'Hyperlink to book from Znanium DL';
-$string['privacy:metadata'] = 'The plugin does not store any personal data.';
+/**
+ * Initialise the js strings required for this plugin
+ */
+function atto_znaniumcombook_strings_for_js() {
+    global $PAGE;
 
+    $strings = array(
+        'button_name',
+        'page_modal_button',
+        'page_modal_new_window',
+        'page_modal_page',
+        'page_modal_title',
+    );
+    $PAGE->requires->strings_for_js($strings, 'atto_znaniumcombook');
+}
+
+/**
+ * Sends the parameters to the JS module.
+ *
+ * @return array
+ */
+function atto_znaniumcombook_params_for_js() {
+    return array();
+}
