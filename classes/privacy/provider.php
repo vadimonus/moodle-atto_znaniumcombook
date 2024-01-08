@@ -25,8 +25,6 @@
 
 namespace atto_znaniumcombook\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for atto_znaniumcombook implementing null_provider.
  */

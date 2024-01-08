@@ -29,13 +29,13 @@
 function atto_znaniumcombook_strings_for_js() {
     global $PAGE;
 
-    $strings = array(
+    $strings = [
         'button_name',
         'page_modal_button',
         'page_modal_new_window',
         'page_modal_page',
         'page_modal_title',
-    );
+    ];
     $PAGE->requires->strings_for_js($strings, 'atto_znaniumcombook');
 }
 
@@ -45,5 +45,5 @@ function atto_znaniumcombook_strings_for_js() {
  * @return array
  */
 function atto_znaniumcombook_params_for_js() {
-    return array();
+    return [];
 }
