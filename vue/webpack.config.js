@@ -1,30 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const WebpackCopyAfterBuildPlugin = require('webpack-copy-after-build-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env, options) => {
-
-    exports = {
+    let base = {
         mode: 'development',
-        entry: {
-            'bookpicker': './book_picker.js',
-        },
-        output: {
-            path: path.resolve(__dirname, '../amd/build'),
-            filename: 'bookpicker-lazy.min.js',
-            libraryTarget: 'amd',
-        },
         module: {
             rules: [
-                {
-                    test: /\.css$/,
-                    use: [
-                        'vue-style-loader',
-                        'css-loader',
-                    ],
-                },
                 {
                     test: /\.vue$/,
                     loader: 'vue-loader',
@@ -42,17 +25,16 @@ module.exports = (env, options) => {
         },
         resolve: {
             alias: {
-                'vue$': 'vue/dist/vue.esm.js',
+                'vue$': 'vue/dist/vue.esm-browser.js',
             },
-            extensions: ['*', '.js', '.vue', '.json'],
+            extensions: ['.js', '.vue'],
         },
         devtool: 'inline-source-map',
         plugins: [
             new VueLoaderPlugin(),
-            new WebpackCopyAfterBuildPlugin({
-                'bookpicker': '../../amd/src/bookpicker-lazy.js',
+            new webpack.DefinePlugin({
+                __VUE_PROD_DEVTOOLS__: JSON.stringify(false)
             }),
-
         ],
         watchOptions: {
             ignored: /node_modules/,
@@ -80,19 +62,17 @@ module.exports = (env, options) => {
     };
 
     if (options.mode === 'production') {
-        exports.mode = 'production';
-        exports.devtool = '';
-        exports.plugins = (exports.plugins || []).concat([
+        base.mode = 'production';
+        base.devtool = false;
+        base.plugins = (base.plugins || []).concat([
             new webpack.LoaderOptionsPlugin({
                 minimize: true,
             }),
         ]);
-        exports.optimization = {
+        base.optimization = {
             minimizer: [
                 new TerserPlugin({
-                    cache: true,
                     parallel: true,
-                    sourceMap: true,
                     terserOptions: {
                         output: {
                             comments: false,
@@ -101,7 +81,31 @@ module.exports = (env, options) => {
                 }),
             ],
         };
+        base.resolve.alias.vue$ = 'vue/dist/vue.esm-browser.prod.js';
     }
 
-    return exports;
+    let src = {
+        ...base,
+        entry: {
+            'bookpicker': './book_picker.js',
+        },
+        output: {
+            path: path.resolve(__dirname, '../amd/src'),
+            filename: 'bookpicker-lazy.js',
+            libraryTarget: 'amd',
+        },
+    };
+    let build = {
+        ...base,
+        entry: {
+            'bookpicker': './book_picker.js',
+        },
+        output: {
+            path: path.resolve(__dirname, '../amd/build'),
+            filename: 'bookpicker-lazy.min.js',
+            libraryTarget: 'amd',
+        },
+    };
+
+    return [src, build];
 };
