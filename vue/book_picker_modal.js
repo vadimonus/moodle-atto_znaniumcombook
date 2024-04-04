@@ -24,62 +24,51 @@
 
 import ModalFactory from 'core/modal_factory';
 import ModalEvents from 'core/modal_events';
-import Vue from 'vue';
-import Vuex from 'vuex';
-import BookPickerModalBody from '../../../../../../mod/znaniumcombook/vue/book_picker_modal_body';
-import storeDefinition from '../../../../../../mod/znaniumcombook/vue/store';
+import {createApp} from 'vue';
+import {createStore} from 'vuex';
+import BookPickerModalBody from './book_picker_modal_body';
+import storeDefinition from './store';
 
 export default class BookPickerModal {
+    async show(bookSelectedCallback) {
+        const store = createStore(storeDefinition);
+        await store.dispatch('loadComponentStrings');
 
-    constructor(callback) {
-        this.bookSelectedCallback = callback;
-    }
-
-    async show() {
-        Vue.use(Vuex);
-        this.store = new Vuex.Store(storeDefinition);
-        await this.store.dispatch('loadComponentStrings');
-
-        this.modal = await ModalFactory.create({
+        let moodleModal = await ModalFactory.create({
             type: ModalFactory.types.CANCEL,
-            title: this.store.state.strings.modal_title,
-            body: '',
+            title: store.state.strings.modal_title,
+            body: '<div id="book-picker-modal-body"></div>',
+        });
+        let vue;
+
+        moodleModal.setLarge();
+
+        moodleModal.getRoot().on(ModalEvents.hidden, function () {
+            vue.unmount();
+            moodleModal.destroy();
         });
 
-        this.modal.setLarge();
-
-        this.modal.getRoot().on(ModalEvents.hidden, function () {
-            this.vue.$destroy();
-            this.modal.setBody('');
-        }.bind(this));
-
-        this.modal.getRoot().on(ModalEvents.shown, function () {
-            const template = '<div id="book-picker-modal-body"><book-picker-modal-body @book-selected="onBookSelected"></book-picker-modal-body></div>';
-            this.modal.setBody(template);
-
-            const that = this;
-            that.vue = new Vue({
-                el: '#book-picker-modal-body',
+        moodleModal.getRoot().on(ModalEvents.shown, function () {
+            vue = createApp({
                 name: 'BookPickerModalWrapper',
                 components: {
                     BookPickerModalBody,
                 },
+                template: '<book-picker-modal-body @book-selected="onBookSelected"></book-picker-modal-body>',
                 methods: {
                     onBookSelected: function () {
-                        if (that.bookSelectedCallback) {
-                            let book = this.$store.state.selectedBook;
-                            that.bookSelectedCallback(book.id, book.description, book.cover);
+                        if (bookSelectedCallback) {
+                            let book = store.state.selectedBook;
+                            bookSelectedCallback(book.id, book.description, book.cover);
                         }
+                        moodleModal.hide();
                     },
                 },
-                store: this.store,
             });
-        }.bind(this));
+            vue.use(store);
+            vue.mount('#book-picker-modal-body');
+        });
 
-        this.modal.show();
-    }
-
-    hide() {
-        this.modal.hide();
+        moodleModal.show();
     }
 }

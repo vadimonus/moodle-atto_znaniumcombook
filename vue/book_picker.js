@@ -22,14 +22,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import book_picker_modal from './book_picker_modal';
+import BookPickerModal from './book_picker_modal';
 
-export function init(callback) {
+export function init(bookSelectedCallback) {
     let modal;
-    let hideAndCallback = function (id, description, cover) {
-        modal.hide();
-        callback(id, description, cover);
-    };
-    modal = new book_picker_modal(hideAndCallback);
-    modal.show();
+    modal = new BookPickerModal();
+    modal.show(bookSelectedCallback);
 }
