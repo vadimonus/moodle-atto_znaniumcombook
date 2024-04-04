@@ -1,4 +1,4 @@
-Book from znanium.com
+Book from znanium.ru
 =====================
 
 This plugin is intended for use with russian digital library system Znanium, 
@@ -31,7 +31,7 @@ so all documentations is provided in russian language.
 
 Ссылки
 ------
-- ЭБС Znanium: http://znanium.com/
+- ЭБС Znanium: http://znanium.ru/
 
 История изменений
 -----------------
@@ -39,5 +39,3 @@ so all documentations is provided in russian language.
   - Первый публичный релиз.
 - Релиз 2024-04-03:
   - Переход на vue 3
-
-
